@@ -278,19 +278,32 @@
     <div id="notification" class="notification"></div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
-        import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-database.js";
+    // Import des modules Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+    import { 
+        getAuth, 
+        onAuthStateChanged 
+    } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+    import { 
+        getDatabase, 
+        ref,
+        get,
+        update,
+        set,
+        push,
+        serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDIB-raa12rkzqxRhflOMLBwL4hBycTgmo",
-            authDomain: "coke-eea48.firebaseapp.com",
-            databaseURL: "https://coke-eea48-default-rtdb.firebaseio.com",
-            projectId: "coke-eea48",
-            storageBucket: "coke-eea48.firebasestorage.app",
-            messagingSenderId: "217366074971",
-            appId: "1:217366074971:web:948bdc5baeeea93fac117e"
-        };
+    // Configuration Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyB8hezVsx76SnhCeeYi-04wIvcoV2zgoF0",
+        authDomain: "solar-edge-a9bee.firebaseapp.com",
+        databaseURL: "https://solar-edge-a9bee-default-rtdb.firebaseio.com",
+        projectId: "solar-edge-a9bee",
+        storageBucket: "solar-edge-a9bee.appspot.com",
+        messagingSenderId: "373374898393",
+        appId: "1:373374898393:web:39afe1cfdeca18e712eec8"
+    }; 
 
         // Initialiser Firebase
         const app = initializeApp(firebaseConfig);
