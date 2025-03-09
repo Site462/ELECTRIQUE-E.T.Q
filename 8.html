@@ -1,0 +1,119 @@
+// Ajoutez ces fonctions pour gérer les bonus de parrainage
+async function processReferralBonus(amount, userId) {
+    try {
+        // Vérifier si l'utilisateur a été parrainé
+        const userRef = ref(db, `users/${userId}`);
+        const userSnapshot = await get(userRef);
+        const userData = userSnapshot.val();
+
+        if (!userData.referredBy) return; // L'utilisateur n'a pas de parrain
+
+        const referrerUid = userData.referredBy;
+        const bonusAmount = amount * 0.10; // 10% de l'investissement
+
+        // Mise à jour du solde du parrain
+        const referrerRef = ref(db, `users/${referrerUid}`);
+        const referrerSnapshot = await get(referrerRef);
+        
+        if (referrerSnapshot.exists()) {
+            const referrerData = referrerSnapshot.val();
+            await update(referrerRef, {
+                balance: (referrerData.balance || 0) + bonusAmount,
+                totalReferralBonus: (referrerData.totalReferralBonus || 0) + bonusAmount
+            });
+
+            // Mise à jour des statistiques du filleul
+            await update(userRef, {
+                totalBonusGenerated: (userData.totalBonusGenerated || 0) + bonusAmount
+            });
+
+            // Enregistrer le bonus dans l'historique
+            const bonusLogRef = ref(db, `bonusLogs/${referrerUid}`);
+            const newBonusRef = push(bonusLogRef);
+            await set(newBonusRef, {
+                amount: bonusAmount,
+                memberId: userId,
+                investmentAmount: amount,
+                timestamp: serverTimestamp(),
+                type: 'investment_bonus'
+            });
+
+            // Créer une notification pour le parrain
+            const notificationRef = ref(db, `notifications/${referrerUid}`);
+            const newNotifRef = push(notificationRef);
+            await set(newNotifRef, {
+                type: 'referral_bonus',
+                message: `Vous avez reçu un bonus de parrainage de ${bonusAmount.toLocaleString('fr-FR')} FCFA`,
+                amount: bonusAmount,
+                memberId: userId,
+                timestamp: serverTimestamp(),
+                read: false
+            });
+        }
+    } catch (error) {
+        console.error('Erreur lors du traitement du bonus de parrainage:', error);
+    }
+}
+
+// Modifier la fonction investProduct pour inclure le traitement du bonus de parrainage
+window.investProduct = async function(productId, amount) {
+    if (!currentUser) {
+        showNotification("Veuillez vous connecter pour investir", "error");
+        return;
+    }
+
+    const productConfig = PRODUCT_CONFIG[productId];
+    const activeInvestments = await checkActiveInvestments(currentUser.uid, productId);
+    
+    if (activeInvestments >= productConfig.limit) {
+        showNotification("Vous avez atteint la limite d'achat pour ce produit", "error");
+        return;
+    }
+
+    if (userBalance < amount) {
+        showNotification("Solde insuffisant pour cet investissement", "error");
+        return;
+    }
+
+    try {
+        const userRef = ref(db, `users/${currentUser.uid}`);
+        const investmentsRef = ref(db, `investments/${currentUser.uid}`);
+        const currentDate = new Date();
+
+        // Mettre à jour le solde de l'utilisateur
+        await update(userRef, {
+            balance: userBalance - amount,
+            totalInvestments: serverTimestamp()
+        });
+
+        // Créer le nouvel investissement
+        const newInvestmentRef = push(investmentsRef);
+        await set(newInvestmentRef, {
+            productId: productId,
+            amount: amount,
+            startDate: currentDate.toISOString(),
+            endDate: new Date(currentDate.getTime() + (productConfig.cycleDuration * 24 * 60 * 60 * 1000)).toISOString(),
+            status: 'active',
+            remainingDays: productConfig.cycleDuration,
+            dailyRevenue: productConfig.dailyRevenue,
+            totalRevenue: productConfig.totalRevenue,
+            collectedRevenue: 0,
+            lastCollection: currentDate.toISOString(),
+            timestamp: serverTimestamp()
+        });
+
+        // Traiter le bonus de parrainage
+        await processReferralBonus(amount, currentUser.uid);
+
+        userBalance -= amount;
+        await updateInvestmentLimits(currentUser.uid);
+        showNotification("Investissement réussi!", "success");
+
+        setTimeout(() => {
+            window.location.href = 'produits.html';
+        }, 2000);
+    } catch (error) {
+        console.error("Erreur lors de l'investissement:", error);
+        showNotification("Une erreur est survenue lors de l'investissement", "error");
+    }
+};

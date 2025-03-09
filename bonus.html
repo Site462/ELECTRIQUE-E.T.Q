@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Générateur de Bonus</title>
+    <style>
+        /* Les styles restent les mêmes que précédemment */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #444;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        .btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            font-weight: bold;
+        }
+        
+        .btn:hover {
+            background: #45a049;
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+            text-align: center;
+        }
+        
+        .code-display {
+            margin-top: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #2196F3;
+        }
+        
+        .timer {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .history {
+            margin-top: 30px;
+        }
+
+        .history-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .expired {
+            color: #999;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎁 Générateur de Codes Bonus</h1>
+        
+        <div class="card">
+            <div class="input-group">
+                <label>Montant du bonus</label>
+                <input type="number" id="amount" placeholder="Entrez le montant">
+            </div>
+            <button class="btn" onclick="generateCode()">Générer un Code Bonus</button>
+            <div id="result" class="result"></div>
+        </div>
+
+        <div class="history" id="history">
+            <h2>Historique des codes</h2>
+        </div>
+    </div>
+
+    <script type="module">
+        // Import des modules Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+        import { getDatabase, ref, set, onValue, push } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+
+        // Configuration Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyB8hezVsx76SnhCeeYi-04wIvcoV2zgoF0",
+            authDomain: "solar-edge-a9bee.firebaseapp.com",
+            databaseURL: "https://solar-edge-a9bee-default-rtdb.firebaseio.com",
+            projectId: "solar-edge-a9bee",
+            storageBucket: "solar-edge-a9bee.firebasestorage.app",
+            messagingSenderId: "373374898393",
+            appId: "1:373374898393:web:39afe1cfdeca18e712eec8"
+        };
+
+        // Initialiser Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Référence à la collection des codes bonus
+        const bonusCodesRef = ref(db, 'bonusCodes');
+
+        // Fonction pour générer un code
+        window.generateCode = async function() {
+            const amount = document.getElementById('amount').value;
+            if (!amount) {
+                showResult('Veuillez entrer un montant.', 'error');
+                return;
+            }
+
+            const timestamp = Date.now();
+            const randomPart = Math.random().toString(36).substring(2, 8);
+            const code = `${randomPart}${timestamp}`.substring(0, 12).toUpperCase();
+
+            const codeData = {
+                code: code,
+                amount: Number(amount),
+                timestamp: timestamp,
+                used: false,
+                expiresAt: timestamp + (5 * 60 * 1000),
+                createdAt: timestamp
+            };
+
+            // Sauvegarder dans Firebase
+            const newCodeRef = push(bonusCodesRef);
+            await set(newCodeRef, codeData);
+
+            // Afficher le résultat
+            const result = document.getElementById('result');
+            result.style.display = 'block';
+            result.innerHTML = `
+                <div>Code bonus généré :</div>
+                <div class="code-display">${code}</div>
+                <div class="timer">Ce code expirera dans 5 minutes</div>
+            `;
+        }
+
+        // Écouter les changements dans la base de données
+        onValue(bonusCodesRef, (snapshot) => {
+            const data = snapshot.val();
+            updateHistory(data);
+        });
+
+        function updateHistory(data) {
+            const historyDiv = document.getElementById('history');
+            const currentTime = Date.now();
+            
+            let historyHTML = '<h2>Historique des codes</h2>';
+            
+            if (data) {
+                Object.values(data).reverse().forEach(codeObj => {
+                    const isExpired = currentTime > codeObj.expiresAt;
+                    const status = codeObj.used ? 'Utilisé' : 
+                                isExpired ? 'Expiré' : 
+                                'Actif';
+                    
+                    historyHTML += `
+                        <div class="history-item ${isExpired ? 'expired' : ''}">
+                            <div>
+                                Code: ${codeObj.code}<br>
+                                Montant: ${codeObj.amount}€<br>
+                                Date: ${new Date(codeObj.createdAt).toLocaleString()}
+                            </div>
+                            <div>Status: ${status}</div>
+                        </div>
+                    `;
+                });
+            }
+            
+            historyDiv.innerHTML = historyHTML;
+        }
+
+        function showResult(message, type) {
+            const result = document.getElementById('result');
+            result.innerHTML = message;
+            result.className = `result ${type}`;
+            result.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

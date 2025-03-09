@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Panneaux Solaires</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 15px; 
+            background-image: url('https://image.noelshack.com/fichiers/2025/10/4/1741260583-anre.png'); 
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed; 
+            min-height: 100vh; 
+        } 
+        .stats-container { 
+            display: flex; 
+            justify-content: center; 
+            gap: 15px; 
+            margin-bottom: 20px; 
+        } 
+        .stat-card { 
+            background: rgba(255, 255, 255, 0.9); 
+            backdrop-filter: blur(5px); 
+            padding: 12px; 
+            border-radius: 10px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+            text-align: center; 
+            flex: 1; 
+            max-width: 200px; 
+            transition: transform 0.3s ease; 
+        } 
+        .stat-card:hover { 
+            transform: translateY(-3px); 
+        } 
+        .stat-value { 
+            font-size: 1.8em; 
+            font-weight: bold; 
+            color: #2196F3; 
+            margin: 8px 0; 
+        } 
+        .stat-label { 
+            font-size: 0.9em; 
+            color: #666; 
+            margin-bottom: 3px; 
+        } 
+        .product-card { 
+            background: rgba(255, 255, 255, 0.9); 
+            backdrop-filter: blur(5px); 
+            margin: 15px 0; 
+            padding: 15px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+            display: flex; 
+            transition: transform 0.2s; 
+        } 
+        .product-card:hover { 
+            transform: translateY(-3px); 
+        } 
+        .product-image { 
+            width: 150px; 
+            height: 150px; 
+            object-fit: cover; 
+            border-radius: 4px; 
+            margin-right: 15px; 
+        } 
+        .product-info { 
+            flex: 1; 
+        } 
+        .collect-btn { 
+            background: linear-gradient(135deg, #4CAF50, #45a049); 
+            color: white; 
+            padding: 8px 16px; 
+            border: none; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            font-size: 14px; 
+            margin-top: 10px; 
+            transition: all 0.3s ease; 
+        } 
+        .collect-btn:disabled { 
+            background: #cccccc; 
+            cursor: not-allowed; 
+        } 
+        .cycle-info {
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 8px;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #eee;
+            border-radius: 4px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 24px;
+            border-radius: 8px;
+            color: white;
+            display: none;
+            z-index: 1000;
+        }
+        .notification.success { background: linear-gradient(135deg, #00C851, #007E33); }
+        .notification.error { background: linear-gradient(135deg, #ff4444, #cc0000); }
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="notification"></div>
+    <div id="products-page">
+        <h1>Centre de produit </h1>
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-label">Total de Produits</div>
+                <div class="stat-value" id="total-products">0</div>
+                <div class="stat-label"></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Revenus Totaux</div>
+                <div class="stat-value" id="total-revenue">0</div>
+                <div class="stat-label">FCFA gagnés</div>
+            </div>
+        </div>
+        <div id="products-container">
+            <!-- Les produits seront affichés ici -->
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+        import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB8hezVsx76SnhCeeYi-04wIvcoV2zgoF0",
+            authDomain: "solar-edge-a9bee.firebaseapp.com",
+            databaseURL: "https://solar-edge-a9bee-default-rtdb.firebaseio.com",
+            projectId: "solar-edge-a9bee",
+            storageBucket: "solar-edge-a9bee.appspot.com",
+            messagingSenderId: "373374898393",
+            appId: "1:373374898393:web:39afe1cfdeca18e712eec8"
+        };
+
+        const PRODUCT_CONFIG = {
+    1: {
+        dailyRevenue: 80,
+        cycleDuration: 60,
+        totalRevenue: 4800,
+        price: 1500,
+        limit: 1
+    },
+    2: {
+        dailyRevenue: 190,
+        cycleDuration: 60,
+        totalRevenue: 11400,
+        price: 5000,
+        limit: 2
+    },
+    3: {
+        dailyRevenue: 270,
+        cycleDuration: 60,
+        totalRevenue: 16200,
+        price: 9000,
+        limit: 2
+    },
+    4: {
+        dailyRevenue: 430,
+        cycleDuration: 60,
+        totalRevenue: 25800,
+        price: 12000,
+        limit: 2
+    },
+    5: {
+        dailyRevenue: 1100,
+        cycleDuration: 60,
+        totalRevenue: 66000,
+        price: 18000,
+        limit: 2
+    },
+    6: {
+        dailyRevenue: 1890,
+        cycleDuration: 60,
+        totalRevenue: 113400,
+        price: 24000,
+        limit: 2
+    },
+    7: {
+        dailyRevenue: 3250,
+        cycleDuration: 60,
+        totalRevenue: 195000,
+        price: 40000,
+        limit: 3
+    },
+    8: {
+        dailyRevenue: 9100,
+        cycleDuration: 60,
+        totalRevenue: 546000,
+        price: 70000,
+        limit: 3
+    },
+    9: {
+        dailyRevenue: 12090,
+        cycleDuration: 60,
+        totalRevenue: 725400,
+        price: 100000,
+        limit: 3
+    },
+    10: {
+        dailyRevenue: 18000,
+        cycleDuration: 60,
+        totalRevenue: 1080000,
+        price: 200000,
+        limit: 3
+    }
+};
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        let currentUser = null;
+
+        function showNotification(message, type) {
+            const notification = document.querySelector('.notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.style.display = 'block';
+            setTimeout(() => notification.style.display = 'none', 3000);
+        }
+
+        function calculateCycleProgress(investment) {
+            const config = PRODUCT_CONFIG[investment.productId];
+            if (!config) return { isComplete: true, progress: 100, remainingDays: 0 };
+
+            const totalCollected = investment.totalCollected || 0;
+            const progress = (totalCollected / config.totalRevenue) * 100;
+            const daysInCycle = Math.floor((Date.now() - investment.timestamp) / (1000 * 60 * 60 * 24));
+            const remainingDays = Math.max(0, config.cycleDuration - daysInCycle);
+
+            return {
+                isComplete: totalCollected >= config.totalRevenue,
+                progress: Math.min(progress, 100),
+                remainingDays: remainingDays
+            };
+        }
+
+        function updateStats(investments) {
+            let totalProducts = 0;
+            let totalRevenue = 0;
+
+            investments.forEach(investment => {
+                totalProducts++;
+                totalRevenue += (investment.totalCollected || 0);
+            });
+
+            document.getElementById('total-products').textContent = totalProducts;
+            document.getElementById('total-revenue').textContent = totalRevenue.toLocaleString() + ' FCFA';
+        }
+
+        function isReadyToCollect(investment) {
+            const lastCollection = investment.lastCollection || 0;
+            const now = new Date();
+            const lastCollectionDate = new Date(lastCollection);
+            
+            // Vérifier si la dernière collection était un jour différent
+            return lastCollectionDate.getDate() !== now.getDate() ||
+                   lastCollectionDate.getMonth() !== now.getMonth() ||
+                   lastCollectionDate.getFullYear() !== now.getFullYear();
+        }
+
+        async function loadProducts() {
+            if (!currentUser) return;
+
+            try {
+                const investmentsRef = ref(db, `investments/${currentUser.uid}`);
+                const snapshot = await get(investmentsRef);
+                const container = document.getElementById('products-container');
+
+                if (!snapshot.exists()) {
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 20px; background: rgba(255,255,255,0.9); border-radius: 8px;">
+                            <h2>Aucun produit  installé</h2>
+                            <p>Commencez à investir pour voir vos produits ici.</p>
+                        </div>
+                    `;
+                    updateStats([]);
+                    return;
+                }
+
+                const investments = [];
+                snapshot.forEach(childSnapshot => {
+                    investments.push({
+                        id: childSnapshot.key,
+                        ...childSnapshot.val()
+                    });
+                });
+
+                updateStats(investments);
+
+                container.innerHTML = investments.map(investment => {
+                    const config = PRODUCT_CONFIG[investment.productId];
+                    const { isComplete, progress, remainingDays } = calculateCycleProgress(investment);
+                    const canCollect = !isComplete && isReadyToCollect(investment);
+
+                    return `
+                        <div class="product-card">
+                            <img src="https://image.noelshack.com/fichiers/2025/01/5/1735919832-fonctionnement-panneau-solaire-le-guide-la-maison-saint-gobain-01.jpg" alt="Panneau Solaire ${investment.productId}" class="product-image">
+                            <div class="product-info">
+                                <h2>produit G${investment.productId}</h2>
+                                <p><strong>Revenus journaliers:</strong> ${config.dailyRevenue.toLocaleString()} FCFA</p>
+                                <p><strong>Date d'installation:</strong> ${new Date(investment.timestamp).toLocaleDateString()}</p>
+                                
+                                <div class="cycle-info">
+                                    <p><strong>Cycle:</strong> ${isComplete ? 'Terminé' : `${remainingDays} jours restants`}</p>
+                                    <p><strong>Total collecté:</strong> ${(investment.totalCollected || 0).toLocaleString()} / ${config.totalRevenue.toLocaleString()} FCFA</p>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: ${progress}%"></div>
+                                    </div>
+                                </div>
+
+                                <button 
+                                    class="collect-btn"
+                                    onclick="window.collectRevenue('${investment.id}')"
+                                    ${(!canCollect || isComplete) ? 'disabled' : ''}>
+                                    ${isComplete ? 'Cycle terminé' : (canCollect ? 'Collecter les gains' : 'Déjà collecté aujourd\'hui')}
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+            } catch (error) {
+                console.error("Erreur lors du chargement des produits:", error);
+                showNotification("Erreur lors du chargement des produits", "error");
+            }
+        }
+
+        window.collectRevenue = async function(investmentId) {
+            if (!currentUser) return;
+
+            try {
+                const investmentRef = ref(db, `investments/${currentUser.uid}/${investmentId}`);
+                const userRef = ref(db, `users/${currentUser.uid}`);
+
+                const [investmentSnapshot, userSnapshot] = await Promise.all([
+                    get(investmentRef),
+                    get(userRef)
+                ]);
+
+                if (!investmentSnapshot.exists() || !userSnapshot.exists()) {
+                    showNotification("Erreur: Données non trouvées", "error");
+                    return;
+                }
+
+                const investment = investmentSnapshot.val();
+                const user = userSnapshot.val();
+                const config = PRODUCT_CONFIG[investment.productId];
+
+                if (!config) {
+                    showNotification("Configuration du produit non trouvée", "error");
+                    return;
+                }
+
+                const { isComplete } = calculateCycleProgress(investment);
+                if (isComplete) {
+                    showNotification("Ce produit a terminé son cycle", "error");
+                    return;
+                }
+
+                if (!isReadyToCollect(investment)) {
+                    showNotification("Vous avez déjà collecté aujourd'hui", "error");
+                    return;
+                }
+
+                const currentTotal = investment.totalCollected || 0;
+                const newTotal = currentTotal + config.dailyRevenue;
+
+                // Vérifier si le nouveau total dépasse le revenu total maximum
+                if (newTotal > config.totalRevenue) {
+                    showNotification("Le cycle de ce produit est terminé", "error");
+                    return;
+                }
+
+                // Mettre à jour le solde de l'utilisateur et les données de l'investissement
+                await Promise.all([
+                    update(userRef, {
+                        balance: (user.balance || 0) + config.dailyRevenue
+                    }),
+                    update(investmentRef, {
+                        lastCollection: Date.now(),
+                        totalCollected: newTotal
+                    })
+                ]);
+
+                showNotification(`Vous avez collecté ${config.dailyRevenue.toLocaleString()} FCFA !`, "success");
+                loadProducts(); // Recharger l'affichage
+            } catch (error) {
+                console.error("Erreur lors de la collecte:", error);
+                showNotification("Erreur lors de la collecte des revenus", "error");
+            }
+        };
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                loadProducts();
+            } else {
+                window.location.href = 'login.html';
+            }
+        });
+
+        window.addEventListener('error', (error) => {
+            console.error('Une erreur est survenue:', error);
+            showNotification('Une erreur inattendue est survenue', 'error');
+        });
+    </script>
+</body>
+</html>

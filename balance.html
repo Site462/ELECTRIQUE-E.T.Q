@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Banking</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Reset et styles de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        /* Section balance */
+        .balance-section {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                            url('https://image.noelshack.com/fichiers/2024/52/6/1735390729-how-is-solar-energy-useful-to-us.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 25px;
+            color: white;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* En-tête */
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            padding: 5px;
+            object-fit: contain;
+        }
+
+        .identifier {
+            font-size: 16px;
+            color: white;
+        }
+
+        .stars {
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+
+        /* Contenu balance */
+        .balance-content {
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .balance-label {
+            font-size: 24px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .balance-amount {
+            font-size: 40px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Boutons d'action */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px;
+        }
+
+        .action-button {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-radius: 12px;
+            background: white;
+            text-decoration: none;
+            color: #333;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .action-button i {
+            font-size: 18px;
+            margin-right: 15px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .action-button span {
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        /* Couleurs des icônes */
+        .btn-history i { color: #00C9FF; }
+        .btn-recharge-history i { color: #FC466B; }
+        .btn-deposit i { color: #4CAF50; }
+        .btn-recharge i { color: #9C27B0; }
+        .btn-config i { color: #2196F3; }
+        .btn-card i { color: #FF9800; }
+        .btn-products i { color: #F44336; }
+        .btn-help i { color: #607D8B; }
+
+        /* Menu du bas */
+        .bottom-menu {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #666;
+            font-size: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .menu-item i {
+            font-size: 20px;
+            margin-bottom: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-item:hover {
+            color: #00C9FF;
+        }
+
+        .menu-item:hover i {
+            transform: scale(1.1);
+        }
+
+        .menu-item.active {
+            color: #00C9FF;
+        }
+    </style>
+</head>
+<body>
+    <!-- Section du solde -->
+    <div class="balance-section">
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="votre-logo.png" alt="Logo" class="logo">
+                <span class="identifier">Identifiant</span>
+            </div>
+            <div class="stars">*******</div>
+        </div>
+        <div class="balance-content">
+            <div class="balance-label">Équilibre</div>
+            <div class="balance-amount">00,00 FCFA</div>
+        </div>
+    </div>
+
+    <!-- Boutons d'action -->
+    <div class="action-buttons">
+        <a href="#" class="action-button btn-history">
+            <i class="fas fa-history"></i>
+            <span>Historique de retrait</span>
+        </a>
+        <a href="#" class="action-button btn-recharge-history">
+            <i class="fas fa-sync"></i>
+            <span>Historique de recharge</span>
+        </a>
+        <a href="#" class="action-button btn-deposit">
+            <i class="fas fa-download"></i>
+            <span>Dépôt</span>
+        </a>
+        <a href="#" class="action-button btn-recharge">
+            <i class="fas fa-upload"></i>
+            <span>Recharge</span>
+        </a>
+        <a href="#" class="action-button btn-config">
+            <i class="fas fa-cog"></i>
+            <span>Configuration</span>
+        </a>
+        <a href="#" class="action-button btn-card">
+            <i class="fas fa-credit-card"></i>
+            <span>Carte bancaire</span>
+        </a>
+        <a href="#" class="action-button btn-products">
+            <i class="fas fa-shopping-bag"></i>
+            <span>Produits</span>
+        </a>
+        <a href="#" class="action-button btn-help">
+            <i class="fas fa-question-circle"></i>
+            <span>Centre d'aide</span>
+        </a>
+    </div>
+
+    <!-- Menu de navigation -->
+    <nav class="bottom-menu">
+        <a href="#" class="menu-item active">
+            <i class="fas fa-home"></i>
+            <span>Accueil</span>
+        </a>
+        <a href="#" class="menu-item">
+            <i class="fas fa-chart-line"></i>
+            <span>Investir</span>
+        </a>
+        <a href="#" class="menu-item">
+            <i class="fas fa-table"></i>
+            <span>Tableau</span>
+        </a>
+        <a href="#" class="menu-item">
+            <i class="fas fa-users"></i>
+            <span>Team</span>
+        </a>
+        <a href="#" class="menu-item">
+            <i class="fas fa-user"></i>
+            <span>Compte</span>
+        </a>
+    </nav>
+</body>
+</html>
