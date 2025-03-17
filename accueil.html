@@ -8,12 +8,12 @@
     <style>
         :root {
     /* Couleurs principales */
-    --primary-color: #1100ff;
-    --secondary-color: #ff3400;
-    --text-color: #3b00ff;
+    --primary-color: #000000;
+    --secondary-color: #6c1600;
+    --text-color: #ff1f00;
     --card-bg: rgba(255, 255, 255, 0.95);
-    --gold-color: #00eaff;
-    --platinum-color: #00d5ff83;
+    --gold-color: #FFD700;
+    --platinum-color: #E5E4E2;
     
     /* Variables de design système */
     --border-radius-sm: 8px;
@@ -432,14 +432,14 @@ body {
         <div class="plans-container">
             <!-- Plan Standard -->
             <div class="plan-card standard">
-                <h2 class="plan-name">Ampoule F</h2>
+                <h2 class="plan-name">Gratuit</h2>
                 <img src="https://image.noelshack.com/fichiers/2025/10/3/1741162485-sihrp7lb-calculer-la-puissance-apparente-500x360.jpg" alt="Plan Standard" class="plan-image">
                 
                 <div class="plan-feature">
                     <i class="fas fa-tag"></i>
                     <div class="feature-text">
                         <div class="feature-label">Prix d'investissement</div>
-                        <div class="feature-value">1 500 FCFA</div>
+                        <div class="feature-value">500 FCFA</div>
                     </div>
                 </div>
 
@@ -447,7 +447,7 @@ body {
                     <i class="fas fa-coins"></i>
                     <div class="feature-text">
                         <div class="feature-label">Revenus quotidiens</div>
-                        <div class="feature-value">80 FCFA</div>
+                        <div class="feature-value">25 FCFA</div>
                     </div>
                 </div>
 
@@ -455,7 +455,7 @@ body {
                     <i class="fas fa-clock"></i>
                     <div class="feature-text">
                         <div class="feature-label">Durée du cycle</div>
-                        <div class="feature-value">60 jours</div>
+                        <div class="feature-value">31 jours</div>
                     </div>
                 </div>
 
@@ -463,7 +463,7 @@ body {
                     <i class="fas fa-piggy-bank"></i>
                     <div class="feature-text">
                         <div class="feature-label">Revenus totaux</div>
-                        <div class="feature-value">4 800 FCFA</div>
+                        <div class="feature-value">775 FCFA</div>
                     </div>
                 </div>
 
@@ -472,7 +472,7 @@ body {
                     <span id="purchaseLimit1">1 achats maximum</span>
                 </div>
 
-                <button class="invest-btn" onclick="investProduct(1, 1500)">
+                <button class="invest-btn" onclick="investProduct(1, 500)">
                     <i class="fas fa-handshake"></i>
                     Investir maintenant
                 </button>
@@ -480,14 +480,14 @@ body {
 
             <!-- Plan Premium -->
             <div class="plan-card premium">
-                <h2 class="plan-name">Électrique C1</h2>
+                <h2 class="plan-name">LV1</h2>
                 <img src="https://image.noelshack.com/fichiers/2025/10/3/1741162547-a4a3dca42ffc908dd98a8fbbaeebe2f10ddff961-article-installation-electrique.jpg" alt="Plan Premium" class="plan-image">
                 
                 <div class="plan-feature">
                     <i class="fas fa-tag"></i>
                     <div class="feature-text">
                         <div class="feature-label">Prix d'investissement</div>
-                        <div class="feature-value">5 000 FCFA</div>
+                        <div class="feature-value">5 500 FCFA</div>
                     </div>
                 </div>
 
@@ -495,7 +495,7 @@ body {
                     <i class="fas fa-coins"></i>
                     <div class="feature-text">
                         <div class="feature-label">Revenus quotidiens</div>
-                        <div class="feature-value">190 FCFA</div>
+                        <div class="feature-value">410 FCFA</div>
                     </div>
                 </div>
 
@@ -503,7 +503,7 @@ body {
                     <i class="fas fa-clock"></i>
                     <div class="feature-text">
                         <div class="feature-label">Durée du cycle</div>
-                        <div class="feature-value">60 jours</div>
+                        <div class="feature-value">31 jours</div>
                     </div>
                 </div>
 
@@ -511,7 +511,7 @@ body {
                     <i class="fas fa-piggy-bank"></i>
                     <div class="feature-text">
                         <div class="feature-label">Revenus totaux</div>
-                        <div class="feature-value">11 400 FCFA</div>
+                        <div class="feature-value">12 710 FCFA</div>
                     </div>
                 </div>
 
@@ -520,21 +520,21 @@ body {
                     <span id="purchaseLimit2">2 achats maximum</span>
                 </div>
 
-                <button class="invest-btn" onclick="investProduct(2, 5000)">
+                <button class="invest-btn" onclick="investProduct(2, 5500)">
                     <i class="fas fa-handshake"></i>
                     Investir maintenant
                 </button>
             </div>
             
             <div class="plan-card premium">
-                <h2 class="plan-name">Batterie B2</h2>
+                <h2 class="plan-name">LV2</h2>
                 <img src="https://image.noelshack.com/fichiers/2025/10/3/1741162632-bpa9241-1-l.jpg" alt="Plan Premium" class="plan-image">
                 
                 <div class="plan-feature">
                     <i class="fas fa-tag"></i>
                     <div class="feature-text">
                         <div class="feature-label">Prix d'investissement</div>
-                        <div class="feature-value">9 000 FCFA</div>
+                        <div class="feature-value">10 500 FCFA</div>
                     </div>
                 </div>
 
@@ -542,7 +542,7 @@ body {
                     <i class="fas fa-coins"></i>
                     <div class="feature-text">
                         <div class="feature-label">Revenus quotidiens</div>
-                        <div class="feature-value">270 FCFA</div>
+                        <div class="feature-value">820 FCFA</div>
                     </div>
                 </div>
 
@@ -550,7 +550,7 @@ body {
                     <i class="fas fa-clock"></i>
                     <div class="feature-text">
                         <div class="feature-label">Durée du cycle</div>
-                        <div class="feature-value">60 jours</div>
+                        <div class="feature-value">31 jours</div>
                     </div>
                 </div>
 
@@ -558,7 +558,7 @@ body {
                     <i class="fas fa-piggy-bank"></i>
                     <div class="feature-text">
                         <div class="feature-label">Revenus totaux</div>
-                        <div class="feature-value">16 200 FCFA</div>
+                        <div class="feature-value">25 420 FCFA</div>
                     </div>
                 </div>
 
@@ -567,21 +567,21 @@ body {
                     <span id="purchaseLimit3">2 achats maximum</span>
                 </div>
 
-                <button class="invest-btn" onclick="investProduct(3, 9000)">
+                <button class="invest-btn" onclick="investProduct(3, 10500)">
                     <i class="fas fa-handshake"></i>
                     Investir maintenant
                 </button>
             </div>
             
             <div class="plan-card premium">
-                <h2 class="plan-name">Volte 250</h2>
+                <h2 class="plan-name">LV3</h2>
                 <img src="https://image.noelshack.com/fichiers/2025/10/3/1741162719-volte.jpg" alt="Plan Premium" class="plan-image">
                 
                 <div class="plan-feature">
                     <i class="fas fa-tag"></i>
                     <div class="feature-text">
                         <div class="feature-label">Prix d'investissement</div>
-                        <div class="feature-value">12 000 FCFA</div>
+                        <div class="feature-value">15 500 FCFA</div>
                     </div>
                 </div>
 
@@ -589,7 +589,7 @@ body {
                     <i class="fas fa-coins"></i>
                     <div class="feature-text">
                         <div class="feature-label">Revenus quotidiens</div>
-                        <div class="feature-value">430 FCFA</div>
+                        <div class="feature-value">1 020 FCFA</div>
                     </div>
                 </div>
 
@@ -597,7 +597,7 @@ body {
                     <i class="fas fa-clock"></i>
                     <div class="feature-text">
                         <div class="feature-label">Durée du cycle</div>
-                        <div class="feature-value">60 jours</div>
+                        <div class="feature-value">31 jours</div>
                     </div>
                 </div>
 
@@ -605,7 +605,7 @@ body {
                     <i class="fas fa-piggy-bank"></i>
                     <div class="feature-text">
                         <div class="feature-label">Revenus totaux</div>
-                        <div class="feature-value">25 800 FCFA</div>
+                        <div class="feature-value">31 620 FCFA</div>
                     </div>
                 </div>
 
@@ -614,21 +614,21 @@ body {
                     <span id="purchaseLimit4">2 achats maximum</span>
                 </div>
 
-                <button class="invest-btn" onclick="investProduct(4, 12000)">
+                <button class="invest-btn" onclick="investProduct(4, 15000)">
                     <i class="fas fa-handshake"></i>
                     Investir maintenant
                 </button>
             </div>
             
             <div class="plan-card premium">
-                <h2 class="plan-name">V12</h2>
+                <h2 class="plan-name">LV4</h2>
                 <img src="https://image.noelshack.com/fichiers/2025/10/3/1741162788-images-2.jpeg" alt="Plan Premium" class="plan-image">
                 
                 <div class="plan-feature">
                     <i class="fas fa-tag"></i>
                     <div class="feature-text">
                         <div class="feature-label">Prix d'investissement</div>
-                        <div class="feature-value">18 000 FCFA</div>
+                        <div class="feature-value">30 500 FCFA</div>
                     </div>
                 </div>
 
@@ -636,7 +636,7 @@ body {
                     <i class="fas fa-coins"></i>
                     <div class="feature-text">
                         <div class="feature-label">Revenus quotidiens</div>
-                        <div class="feature-value">1 100 FCFA</div>
+                        <div class="feature-value">1 985 FCFA</div>
                     </div>
                 </div>
 
@@ -644,7 +644,7 @@ body {
                     <i class="fas fa-clock"></i>
                     <div class="feature-text">
                         <div class="feature-label">Durée du cycle</div>
-                        <div class="feature-value">60  jours</div>
+                        <div class="feature-value">31  jours</div>
                     </div>
                 </div>
 
@@ -652,7 +652,7 @@ body {
                     <i class="fas fa-piggy-bank"></i>
                     <div class="feature-text">
                         <div class="feature-label">Revenus totaux</div>
-                        <div class="feature-value">66 000 FCFA</div>
+                        <div class="feature-value">61 535 FCFA</div>
                     </div>
                 </div>
 
@@ -661,21 +661,21 @@ body {
                     <span id="purchaseLimit5">2 achats maximum</span>
                 </div>
 
-                <button class="invest-btn" onclick="investProduct(5, 18000)">
+                <button class="invest-btn" onclick="investProduct(5, 30000)">
                     <i class="fas fa-handshake"></i>
                     Investir maintenant
                 </button>
             </div>
             
             <div class="plan-card premium">
-                <h2 class="plan-name">DR45</h2>
+                <h2 class="plan-name">LV5</h2>
                 <img src="https://image.noelshack.com/fichiers/2025/10/3/1741162547-a4a3dca42ffc908dd98a8fbbaeebe2f10ddff961-article-installation-electrique.jpg" alt="Plan Premium" class="plan-image">
                 
                 <div class="plan-feature">
                     <i class="fas fa-tag"></i>
                     <div class="feature-text">
                         <div class="feature-label">Prix d'investissement</div>
-                        <div class="feature-value">24 000 FCFA</div>
+                        <div class="feature-value">50 500 FCFA</div>
                     </div>
                 </div>
 
@@ -683,7 +683,7 @@ body {
                     <i class="fas fa-coins"></i>
                     <div class="feature-text">
                         <div class="feature-label">Revenus quotidiens</div>
-                        <div class="feature-value">1 890 FCFA</div>
+                        <div class="feature-value">3 441 FCFA</div>
                     </div>
                 </div>
 
@@ -691,7 +691,7 @@ body {
                     <i class="fas fa-clock"></i>
                     <div class="feature-text">
                         <div class="feature-label">Durée du cycle</div>
-                        <div class="feature-value">60 jours</div>
+                        <div class="feature-value">31 jours</div>
                     </div>
                 </div>
 
@@ -699,7 +699,7 @@ body {
                     <i class="fas fa-piggy-bank"></i>
                     <div class="feature-text">
                         <div class="feature-label">Revenus totaux</div>
-                        <div class="feature-value">113 400  FCFA</div>
+                        <div class="feature-value">106 671  FCFA</div>
                     </div>
                 </div>
 
@@ -708,21 +708,21 @@ body {
                     <span id="purchaseLimit6">2 achats maximum</span>
                 </div>
 
-                <button class="invest-btn" onclick="investProduct(6, 24000)">
+                <button class="invest-btn" onclick="investProduct(6, 50000)">
                     <i class="fas fa-handshake"></i>
                     Investir maintenant
                 </button>
             </div>
             
             <div class="plan-card premium">
-                <h2 class="plan-name">Électriquement RTx</h2>
+                <h2 class="plan-name">LV6</h2>
                 <img src="https://image.noelshack.com/fichiers/2025/10/3/1741162880-anre.png" alt="Plan Premium" class="plan-image">
                 
                 <div class="plan-feature">
                     <i class="fas fa-tag"></i>
                     <div class="feature-text">
                         <div class="feature-label">Prix d'investissement</div>
-                        <div class="feature-value">40 000 FCFA</div>
+                        <div class="feature-value">100 500 FCFA</div>
                     </div>
                 </div>
 
@@ -730,7 +730,7 @@ body {
                     <i class="fas fa-coins"></i>
                     <div class="feature-text">
                         <div class="feature-label">Revenus quotidiens</div>
-                        <div class="feature-value">3 250 FCFA</div>
+                        <div class="feature-value">6 550 FCFA</div>
                     </div>
                 </div>
 
@@ -738,7 +738,7 @@ body {
                     <i class="fas fa-clock"></i>
                     <div class="feature-text">
                         <div class="feature-label">Durée du cycle</div>
-                        <div class="feature-value">60 jours</div>
+                        <div class="feature-value">31 jours</div>
                     </div>
                 </div>
 
@@ -746,7 +746,7 @@ body {
                     <i class="fas fa-piggy-bank"></i>
                     <div class="feature-text">
                         <div class="feature-label">Revenus totaux</div>
-                        <div class="feature-value">195 000 FCFA</div>
+                        <div class="feature-value">203 050FCFA</div>
                     </div>
                 </div>
 
@@ -755,152 +755,13 @@ body {
                     <span id="purchaseLimit7">3 achats maximum</span>
                 </div>
 
-                <button class="invest-btn" onclick="investProduct(7, 40000)">
+                <button class="invest-btn" onclick="investProduct(7, 100000)">
                     <i class="fas fa-handshake"></i>
                     Investir maintenant
                 </button>
             </div>
             
-            <div class="plan-card premium">
-                <h2 class="plan-name">Volume A</h2>
-                <img src="https://image.noelshack.com/fichiers/2025/10/3/1741162899-nergie-lectrique-2.jpg" alt="Plan Premium" class="plan-image">
-                
-                <div class="plan-feature">
-                    <i class="fas fa-tag"></i>
-                    <div class="feature-text">
-                        <div class="feature-label">Prix d'investissement</div>
-                        <div class="feature-value">70 000 FCFA</div>
-                    </div>
-                </div>
-
-                <div class="plan-feature">
-                    <i class="fas fa-coins"></i>
-                    <div class="feature-text">
-                        <div class="feature-label">Revenus quotidiens</div>
-                        <div class="feature-value">9 100 FCFA</div>
-                    </div>
-                </div>
-
-                <div class="plan-feature">
-                    <i class="fas fa-clock"></i>
-                    <div class="feature-text">
-                        <div class="feature-label">Durée du cycle</div>
-                        <div class="feature-value">60 jours</div>
-                    </div>
-                </div>
-
-                <div class="plan-feature">
-                    <i class="fas fa-piggy-bank"></i>
-                    <div class="feature-text">
-                        <div class="feature-label">Revenus totaux</div>
-                        <div class="feature-value">546 000 FCFA</div>
-                    </div>
-                </div>
-
-                <div class="purchase-limit">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span id="purchaseLimit8">3 achats maximum</span>
-                </div>
-
-                <button class="invest-btn" onclick="investProduct(8, 70000)">
-                    <i class="fas fa-handshake"></i>
-                    Investir maintenant
-                </button>
-            </div>
             
-            <div class="plan-card premium">
-                <h2 class="plan-name">345 Cqf</h2>
-                <img src="https://image.noelshack.com/fichiers/2025/10/3/1741162485-sihrp7lb-calculer-la-puissance-apparente-500x360.jpg" alt="Plan Premium" class="plan-image">
-                
-                <div class="plan-feature">
-                    <i class="fas fa-tag"></i>
-                    <div class="feature-text">
-                        <div class="feature-label">Prix d'investissement</div>
-                        <div class="feature-value">100 000 FCFA</div>
-                    </div>
-                </div>
-
-                <div class="plan-feature">
-                    <i class="fas fa-coins"></i>
-                    <div class="feature-text">
-                        <div class="feature-label">Revenus quotidiens</div>
-                        <div class="feature-value">12 090 FCFA</div>
-                    </div>
-                </div>
-
-                <div class="plan-feature">
-                    <i class="fas fa-clock"></i>
-                    <div class="feature-text">
-                        <div class="feature-label">Durée du cycle</div>
-                        <div class="feature-value">60 jours</div>
-                    </div>
-                </div>
-
-                <div class="plan-feature">
-                    <i class="fas fa-piggy-bank"></i>
-                    <div class="feature-text">
-                        <div class="feature-label">Revenus totaux</div>
-                        <div class="feature-value">725 400 FCFA</div>
-                    </div>
-                </div>
-
-                <div class="purchase-limit">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span id="purchaseLimit9">3 achats maximum</span>
-                </div>
-
-                <button class="invest-btn" onclick="investProduct(9, 100000)">
-                    <i class="fas fa-handshake"></i>
-                    Investir maintenant
-                </button>
-            </div>
-            
-            <div class="plan-card premium">
-                <h2 class="plan-name">SD56</h2>
-                <img src="https://image.noelshack.com/fichiers/2025/10/7/1741522205-anre.png" alt="Plan Premium" class="plan-image">
-                
-                <div class="plan-feature">
-                    <i class="fas fa-tag"></i>
-                    <div class="feature-text">
-                        <div class="feature-label">Prix d'investissement</div>
-                        <div class="feature-value">200 000 FCFA</div>
-                    </div>
-                </div>
-
-                <div class="plan-feature">
-                    <i class="fas fa-coins"></i>
-                    <div class="feature-text">
-                        <div class="feature-label">Revenus quotidiens</div>
-                        <div class="feature-value">18 000 FCFA</div>
-                    </div>
-                </div>
-
-                <div class="plan-feature">
-                    <i class="fas fa-clock"></i>
-                    <div class="feature-text">
-                        <div class="feature-label">Durée du cycle</div>
-                        <div class="feature-value">60 jours</div>
-                    </div>
-                </div>
-
-                <div class="plan-feature">
-                    <i class="fas fa-piggy-bank"></i>
-                    <div class="feature-text">
-                        <div class="feature-label">Revenus totaux</div>
-                        <div class="feature-value">1 080 000 FCFA</div>
-                    </div>
-                </div>
-
-                <div class="purchase-limit">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span id="purchaseLimit10">3 achats maximum</span>
-                </div>
-
-                <button class="invest-btn" onclick="investProduct(10, 200000)">
-                    <i class="fas fa-handshake"></i>
-                    Investir maintenant
-                </button>
-            </div>
             
             
         </div>
@@ -961,73 +822,66 @@ let userBalance = 0;
 
 const PRODUCT_CONFIG = {
     1: {
-        dailyRevenue: 80,
-        cycleDuration: 60,
-        totalRevenue: 4800,
-        price: 1500,
+        dailyRevenue: 25,
+        cycleDuration: 31,
+        totalRevenue: 775,
+        price: 500,
         limit: 1
     },
     2: {
-        dailyRevenue: 190,
-        cycleDuration: 60,
-        totalRevenue: 11400,
-        price: 5000,
+        dailyRevenue: 410,
+        cycleDuration: 31,
+        totalRevenue: 12710,
+        price: 5500,
         limit: 2
     },
     3: {
-        dailyRevenue: 270,
-        cycleDuration: 60,
-        totalRevenue: 16200,
-        price: 9000,
+        dailyRevenue: 820,
+        cycleDuration: 31,
+        totalRevenue: 25420,
+        price: 10500,
         limit: 2
     },
     4: {
-        dailyRevenue: 430,
-        cycleDuration: 60,
-        totalRevenue: 25800,
-        price: 12000,
+        dailyRevenue: 1020,
+        cycleDuration: 31,
+        totalRevenue: 31620,
+        price: 15500,
         limit: 2
     },
     5: {
-        dailyRevenue: 1100,
-        cycleDuration: 60,
-        totalRevenue: 66000,
-        price: 18000,
+        dailyRevenue: 1985,
+        cycleDuration: 31,
+        totalRevenue: 61535,
+        price: 30500,
         limit: 2
     },
     6: {
-        dailyRevenue: 1890,
-        cycleDuration: 60,
-        totalRevenue: 113400,
-        price: 24000,
+        dailyRevenue: 3441,
+        cycleDuration: 31,
+        totalRevenue: 106671,
+        price: 50500,
         limit: 2
     },
     7: {
-        dailyRevenue: 3250,
-        cycleDuration: 60,
-        totalRevenue: 195000,
-        price: 40000,
+        dailyRevenue: 6550,
+        cycleDuration: 31,
+        totalRevenue: 203050,
+        price: 200000,
         limit: 3
     },
     8: {
-        dailyRevenue: 9100,
-        cycleDuration: 60,
-        totalRevenue: 546000,
-        price: 70000,
+        dailyRevenue: 50000,
+        cycleDuration: 22,
+        totalRevenue: 1100000,
+        price: 50000,
         limit: 3
     },
     9: {
-        dailyRevenue: 12090,
-        cycleDuration: 60,
-        totalRevenue: 725400,
-        price: 100000,
-        limit: 3
-    },
-    10: {
-        dailyRevenue: 18000,
-        cycleDuration: 60,
-        totalRevenue: 1080000,
-        price: 200000,
+        dailyRevenue: 100000,
+        cycleDuration: 22,
+        totalRevenue: 1200000,
+        price: 1000000,
         limit: 3
     }
 };
